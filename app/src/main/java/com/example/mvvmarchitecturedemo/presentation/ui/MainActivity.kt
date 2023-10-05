@@ -2,39 +2,49 @@ package com.example.mvvmarchitecturedemo.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.mvvmarchitecturedemo.data.remote.DocumentApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mvvmarchitecturedemo.adapter.ProductPageAdapter
 import com.example.mvvmarchitecturedemo.databinding.ActivityMainBinding
-import com.example.mvvmarchitecturedemo.domain.repository.DocumentRepository
-import com.example.mvvmarchitecturedemo.network.ServiceGen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
 
     lateinit var mainViewModal: MainViewModal
+    lateinit var adapter:ProductPageAdapter
 //    private val mainViewModel: MainViewModal by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        adapter= ProductPageAdapter(this@MainActivity)
 
-        val detailApi= ServiceGen.getIntance().create(DocumentApi::class.java)
-        val documentrepo= DocumentRepository(detailApi)
-        mainViewModal=ViewModelProvider(this,MainViewModalFactory(documentrepo)).get(MainViewModal::class.java)
+        mainViewModal= ViewModelProvider(this)[MainViewModal::class.java]
 
-        mainViewModal.docs.observe(this, Observer{
-            Log.d("TAG11",it.toString())
+        binding.RvView.layoutManager=LinearLayoutManager(this)
+        binding.RvView.setHasFixedSize(true)
+        binding.RvView.adapter=adapter
+
+        mainViewModal.list.observe(this,Observer{
+            adapter.submitData(lifecycle,it)
         })
 
-//        val detailApi= ServiceGen.getIntance().create(DetailApi::class.java)
-//        val movieRepo= MovieRepo(detailApi)
-//        mainViewModal=ViewModelProvider(this,MainViewModalFactory(movieRepo)).get(MainViewModal::class.java)
+//        val mLayoutManager = LinearLayoutManager(this@MainActivity)
+//        binding.RvView.layoutManager = mLayoutManager
 //
-//        mainViewModal.movies.observe(this, Observer{
-//            Log.d("TAG11",it.results.toString())
+//        val detailApi= ServiceGen.getIntance().create(DocumentApi::class.java)
+//        val documentrepo= DocumentRepository(detailApi)
+//        mainViewModal=ViewModelProvider(this,MainViewModalFactory(documentrepo)).get(MainViewModal::class.java)
+//
+//        mainViewModal.docs.observe(this, Observer{
+//            Log.d("TAG11",it.events.toString())
+//            binding.RvView.adapter= ProductAdapter(this@MainActivity,it.events)
+//
 //        })
+
     }
 }

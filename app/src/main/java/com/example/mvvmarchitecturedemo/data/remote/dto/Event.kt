@@ -37,7 +37,7 @@ data class Event(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("image")
-    val image: Any?,
+    val image: Image?,
     @SerializedName("modified")
     val modified: String?,
     @SerializedName("modified_utc")
