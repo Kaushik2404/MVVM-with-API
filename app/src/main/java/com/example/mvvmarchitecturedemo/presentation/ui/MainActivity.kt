@@ -5,8 +5,9 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mvvmarchitecturedemo.adapter.ProductPageAdapter
+import com.example.mvvmarchitecturedemo.presentation.paging.ProductPageAdapter
 import com.example.mvvmarchitecturedemo.databinding.ActivityMainBinding
+import com.example.mvvmarchitecturedemo.presentation.paging.LoadAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
 
     lateinit var mainViewModal: MainViewModal
-    lateinit var adapter:ProductPageAdapter
+    lateinit var adapter: ProductPageAdapter
 //    private val mainViewModel: MainViewModal by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.RvView.layoutManager=LinearLayoutManager(this)
         binding.RvView.setHasFixedSize(true)
-        binding.RvView.adapter=adapter
+        binding.RvView.adapter=adapter.withLoadStateHeaderAndFooter(
+            header = LoadAdapter(),
+            footer = LoadAdapter()
+        )
 
         mainViewModal.list.observe(this,Observer{
             adapter.submitData(lifecycle,it)

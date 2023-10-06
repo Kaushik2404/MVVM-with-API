@@ -1,12 +1,11 @@
-package com.example.mvvmarchitecturedemo.di
+package com.example.mvvmarchitecturedemo.presentation.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.mvvmarchitecturedemo.data.remote.DocumentApi
 import com.example.mvvmarchitecturedemo.data.remote.dto.Document
 import com.example.mvvmarchitecturedemo.data.remote.dto.Event
-import com.example.mvvmarchitecturedemo.domain.repository.DocumentRepository
-import retrofit2.Response
+
 
 class ProductPagingSource (private val documentApi: DocumentApi) :
 PagingSource<Int,Event> (){
@@ -15,19 +14,7 @@ PagingSource<Int,Event> (){
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
         }
-//        if(state.anchorPosition != null ){
-//            val anchorPage = state .closestPageToPosition(state.anchorPosition!!)
-//            if(anchorPage?.prevKey !=null){
-//                return  anchorPage.prevKey!!.plus(1)
-//            }
-//            else if (anchorPage?.nextKey != null){
-//                return anchorPage.nextKey!!.minus(1)
-//            }
-//
-//        }
-//        else{
-//            return null
-//        }
+
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Event> {

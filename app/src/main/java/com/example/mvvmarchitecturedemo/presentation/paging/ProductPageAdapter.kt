@@ -1,4 +1,4 @@
-package com.example.mvvmarchitecturedemo.adapter
+package com.example.mvvmarchitecturedemo.presentation.paging
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mvvmarchitecturedemo.R
-import com.example.mvvmarchitecturedemo.data.remote.dto.Document
 import com.example.mvvmarchitecturedemo.data.remote.dto.Event
 
-class ProductPageAdapter( private  val context: Context):PagingDataAdapter<Event,ProductPageAdapter.ProductpageViewHolder> (
-    COMPARATOR) {
+class ProductPageAdapter( private  val context: Context):PagingDataAdapter<Event, ProductPageAdapter.ProductpageViewHolder> (
+    COMPARATOR
+) {
 
 
     class ProductpageViewHolder(iteamView :View )  :RecyclerView.ViewHolder(iteamView) {
@@ -32,7 +32,6 @@ class ProductPageAdapter( private  val context: Context):PagingDataAdapter<Event
              override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
                  return  oldItem == newItem
              }
-
          }
     }
 

@@ -1,13 +1,10 @@
 package com.example.mvvmarchitecturedemo.domain.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.example.mvvmarchitecturedemo.data.remote.DocumentApi
-import com.example.mvvmarchitecturedemo.data.remote.dto.Document
-import com.example.mvvmarchitecturedemo.di.ProductPagingSource
+import com.example.mvvmarchitecturedemo.presentation.paging.ProductPagingSource
 import javax.inject.Inject
 
 class DocumentRepository @Inject constructor(private val documentApi: DocumentApi) {
